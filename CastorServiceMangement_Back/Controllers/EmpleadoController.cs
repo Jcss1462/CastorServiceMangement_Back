@@ -15,7 +15,6 @@ public class EmpleadoController : ControllerBase
         empleadoService = service;
     }
 
-  
 
     [HttpGet("GettAllEmpleados")]
     public IActionResult GettAllEmpleados()
@@ -23,6 +22,30 @@ public class EmpleadoController : ControllerBase
         List<Empleado> empleados = empleadoService.gettAllEmpleados();
         return Ok(empleados);
     }
+
+
+    [HttpPost("createEmpleado")]
+    public IActionResult createEmpleado([FromBody] Empleado newEmpleado)
+    {
+        empleadoService.createEmpleado(newEmpleado);
+        return Ok();
+    }
+
+
+    [HttpPut("{empleadoId}")]
+    public IActionResult Put(int empleadoId, [FromBody] Empleado empleadoToUpdate)
+    {
+        empleadoService.updateEmpleado(empleadoId, empleadoToUpdate);
+        return Ok();
+    }
+
+    [HttpDelete("{empleadoId}")]
+    public IActionResult Delete(int empleadoId)
+    {
+        empleadoService.deleteEmpleado(empleadoId);
+        return Ok();
+    }
+
 
 
 }

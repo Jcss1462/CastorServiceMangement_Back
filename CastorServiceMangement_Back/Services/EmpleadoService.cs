@@ -12,14 +12,27 @@ public class EmpleadoService : IEmpleadoService
         context = dbcontext;
     }
 
-    public void createEmpleado(int cuentaId)
+    public void createEmpleado(Empleado newEmpleado)
     {
-        throw new NotImplementedException();
+        //coloco la fecha de creacion
+        newEmpleado.FechaIngreso = DateOnly.FromDateTime(DateTime.Now);
+        context.Empleados.Add(newEmpleado);
+        context.SaveChanges();
     }
 
-    public void deleteEmpleado(int cuentaId)
+    public void deleteEmpleado(int empleadoId)
     {
-        throw new NotImplementedException();
+        Empleado? empleadoActual = context.Empleados.Find(empleadoId);
+
+        if (empleadoActual != null)
+        {
+            context.Remove(empleadoActual);
+            context.SaveChanges();
+        }
+        else
+        {
+            throw new InvalidOperationException("El empleado no fue encontrado.");
+        }
     }
 
     public List<Empleado> gettAllEmpleados()
@@ -28,17 +41,29 @@ public class EmpleadoService : IEmpleadoService
         return empleados;
     }
 
-    public void updateEmpleado(int cuentaId)
+    public void updateEmpleado(int empleadoId, Empleado empleadoToUpdate)
     {
-        throw new NotImplementedException();
+        Empleado? empleadoActual = context.Empleados.Find(empleadoId);
+
+        if (empleadoActual != null)
+        {
+            empleadoActual.Foto = empleadoToUpdate.Foto;
+            empleadoActual.IdCargo = empleadoToUpdate.IdCargo;
+            empleadoActual.Nombre = empleadoToUpdate.Nombre;
+            context.SaveChanges();
+        }
+        else
+        {
+            throw new InvalidOperationException("El empleado no fue encontrado.");
+        }
     }
 }
 
 public interface IEmpleadoService
 {
-    void createEmpleado(int cuentaId);
+    void createEmpleado(Empleado newEmpleado);
 
     List<Empleado> gettAllEmpleados();
-    void updateEmpleado(int cuentaId);
-    void deleteEmpleado(int cuentaId);
+    void updateEmpleado(int empleadoId,Empleado empleadoToUpdate);
+    void deleteEmpleado(int empleadoId);
 }
