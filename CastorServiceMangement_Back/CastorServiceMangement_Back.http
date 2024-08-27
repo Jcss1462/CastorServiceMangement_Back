@@ -1,0 +1,6 @@
+@CastorServiceMangement_Back_HostAddress = http://localhost:5178
+
+GET {{CastorServiceMangement_Back_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
