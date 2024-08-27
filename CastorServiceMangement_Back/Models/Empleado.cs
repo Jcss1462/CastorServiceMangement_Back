@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CastorServiceMangement_Back.Models;
 
@@ -17,5 +18,6 @@ public partial class Empleado
 
     public string? IdCargo { get; set; }
 
+    [JsonIgnore]
     public virtual Cargo? IdCargoNavigation { get; set; }
 }

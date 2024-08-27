@@ -16,6 +16,7 @@ builder.Services.AddSqlServer<CastorDbContext>(builder.Configuration.GetConnecti
 
 //creo la inversion de dependencia
 builder.Services.AddScoped<IEmpleadoService, EmpleadoService>();
+builder.Services.AddScoped<ICargoService, CargoService>();
 
 var app = builder.Build();
 
