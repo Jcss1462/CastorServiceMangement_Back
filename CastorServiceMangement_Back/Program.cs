@@ -18,6 +18,17 @@ builder.Services.AddSqlServer<CastorDbContext>(builder.Configuration.GetConnecti
 builder.Services.AddScoped<IEmpleadoService, EmpleadoService>();
 builder.Services.AddScoped<ICargoService, CargoService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+            builder =>
+            {
+                builder.AllowAnyOrigin()   // Permitir cualquier origen
+                       .AllowAnyHeader()   // Permitir cualquier encabezado
+                       .AllowAnyMethod();  // Permitir cualquier método HTTP
+            });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,6 +41,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+// Aplicar la política CORS
+app.UseCors("AllowAllOrigins");
 
 app.MapControllers();
 
