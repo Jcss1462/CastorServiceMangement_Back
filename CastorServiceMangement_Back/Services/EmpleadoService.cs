@@ -1,4 +1,5 @@
 using CastorServiceMangement_Back.Data;
+using CastorServiceMangement_Back.Dtos;
 using CastorServiceMangement_Back.Models;
 
 namespace CastorServiceMangement_Back.Services;
@@ -12,8 +13,16 @@ public class EmpleadoService : IEmpleadoService
         context = dbcontext;
     }
 
-    public void createEmpleado(Empleado newEmpleado)
+    public void createEmpleado(EmpleadoDTO newEmpleadoDto)
     {
+        
+        Empleado newEmpleado= new Empleado();
+        newEmpleado.Cedula = newEmpleadoDto.Cedula;
+        newEmpleado.Nombre = newEmpleadoDto.Nombre;
+        newEmpleado.IdCargo = newEmpleadoDto.IdCargo;
+        if (newEmpleadoDto.Foto!.Length>0) {
+          newEmpleado.Foto = Convert.FromBase64String(newEmpleadoDto.Foto!.Split(",")[1]);
+        }
         //coloco la fecha de creacion
         newEmpleado.FechaIngreso = DateOnly.FromDateTime(DateTime.Now);
         context.Empleados.Add(newEmpleado);
@@ -61,7 +70,7 @@ public class EmpleadoService : IEmpleadoService
 
 public interface IEmpleadoService
 {
-    void createEmpleado(Empleado newEmpleado);
+    void createEmpleado(EmpleadoDTO newEmpleadoDto);
 
     List<Empleado> gettAllEmpleados();
     void updateEmpleado(int empleadoId,Empleado empleadoToUpdate);

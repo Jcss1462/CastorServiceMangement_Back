@@ -1,3 +1,4 @@
+using CastorServiceMangement_Back.Dtos;
 using CastorServiceMangement_Back.Models;
 using CastorServiceMangement_Back.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ public class EmpleadoController : ControllerBase
 
 
     [HttpPost("createEmpleado")]
-    public IActionResult createEmpleado([FromBody] Empleado newEmpleado)
+    public IActionResult createEmpleado([FromBody] EmpleadoDTO newEmpleado)
     {
         empleadoService.createEmpleado(newEmpleado);
         return Ok();
