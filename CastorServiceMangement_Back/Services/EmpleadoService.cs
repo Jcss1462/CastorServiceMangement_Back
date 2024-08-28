@@ -44,6 +44,18 @@ public class EmpleadoService : IEmpleadoService
         }
     }
 
+    public Empleado getEmpleadoById(int empleadoId)
+    {
+        Empleado? empleadoActual = context.Empleados.Find(empleadoId);
+
+        if (empleadoActual == null)
+        {
+            throw new InvalidOperationException("El empleado no fue encontrado.");
+        }
+
+        return empleadoActual;
+    }
+
     public List<Empleado> gettAllEmpleados()
     {
         List<Empleado> empleados = context.Empleados.ToList();
@@ -71,7 +83,7 @@ public class EmpleadoService : IEmpleadoService
 public interface IEmpleadoService
 {
     void createEmpleado(EmpleadoDTO newEmpleadoDto);
-
+    Empleado getEmpleadoById(int empleadoId);
     List<Empleado> gettAllEmpleados();
     void updateEmpleado(int empleadoId,Empleado empleadoToUpdate);
     void deleteEmpleado(int empleadoId);

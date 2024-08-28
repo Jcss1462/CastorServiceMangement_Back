@@ -25,6 +25,15 @@ public class EmpleadoController : ControllerBase
     }
 
 
+    
+    [HttpGet("GetEmpleadoById/{id}")]
+    public IActionResult GetEmpleadoById(int id)
+    {
+        Empleado empleado = empleadoService.getEmpleadoById(id);
+        return Ok(empleado);
+    }
+
+
     [HttpPost("createEmpleado")]
     public IActionResult createEmpleado([FromBody] EmpleadoDTO newEmpleado)
     {
