@@ -43,7 +43,7 @@ public class EmpleadoController : ControllerBase
 
 
     [HttpPut("{empleadoId}")]
-    public IActionResult Put(int empleadoId, [FromBody] Empleado empleadoToUpdate)
+    public IActionResult Put(int empleadoId, [FromBody] EmpleadoDTO empleadoToUpdate)
     {
         empleadoService.updateEmpleado(empleadoId, empleadoToUpdate);
         return Ok();

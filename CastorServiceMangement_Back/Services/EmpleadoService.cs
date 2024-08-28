@@ -62,29 +62,37 @@ public class EmpleadoService : IEmpleadoService
         return empleados;
     }
 
-    public void updateEmpleado(int empleadoId, Empleado empleadoToUpdate)
+    public void updateEmpleado(int empleadoId, EmpleadoDTO empleadoToUpdate)
     {
         Empleado? empleadoActual = context.Empleados.Find(empleadoId);
 
         if (empleadoActual != null)
         {
-            empleadoActual.Foto = empleadoToUpdate.Foto;
             empleadoActual.IdCargo = empleadoToUpdate.IdCargo;
             empleadoActual.Nombre = empleadoToUpdate.Nombre;
+            if (empleadoToUpdate.Foto!.Length > 0)
+            {
+                empleadoActual.Foto = Convert.FromBase64String(empleadoToUpdate.Foto!.Split(",")[1]);
+            }
             context.SaveChanges();
         }
         else
         {
             throw new InvalidOperationException("El empleado no fue encontrado.");
         }
+
     }
 }
+
+
+
+
 
 public interface IEmpleadoService
 {
     void createEmpleado(EmpleadoDTO newEmpleadoDto);
     Empleado getEmpleadoById(int empleadoId);
     List<Empleado> gettAllEmpleados();
-    void updateEmpleado(int empleadoId,Empleado empleadoToUpdate);
+    void updateEmpleado(int empleadoId, EmpleadoDTO empleadoToUpdate);
     void deleteEmpleado(int empleadoId);
 }
