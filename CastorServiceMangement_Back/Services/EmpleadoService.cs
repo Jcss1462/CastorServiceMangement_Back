@@ -15,7 +15,17 @@ public class EmpleadoService : IEmpleadoService
 
     public void createEmpleado(EmpleadoDTO newEmpleadoDto)
     {
-        
+
+        //valido que no halla un empleado con la misma cedula
+        bool existeEmpleadoConMismaCedula = context.Empleados
+            .Any(e => e.Cedula == newEmpleadoDto.Cedula);
+
+        if (existeEmpleadoConMismaCedula) {
+            throw new Exception("Ya existe un empleado con cedula: " + newEmpleadoDto.Cedula);
+        }
+
+
+        //creo el empleado
         Empleado newEmpleado= new Empleado();
         newEmpleado.Cedula = newEmpleadoDto.Cedula;
         newEmpleado.Nombre = newEmpleadoDto.Nombre;
